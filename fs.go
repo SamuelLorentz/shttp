@@ -22,6 +22,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/SamuelLorentz/shttp/internal/safefilepath"
 )
 
 // A Dir implements [FileSystem] using the native file system restricted to a
@@ -66,6 +68,10 @@ func mapOpenError(originalErr error, name string, sep rune, stat func(string) (f
 	return originalErr
 }
 
+func Localize(path string) (string, error) {
+	return safefilepath.Localize(path)
+}
+
 // Open implements [FileSystem] using [os.Open], opening files for reading rooted
 // and relative to the directory d.
 func (d Dir) Open(name string) (File, error) {
@@ -73,7 +79,7 @@ func (d Dir) Open(name string) (File, error) {
 	if path == "" {
 		path = "."
 	}
-	path, err := filepath.Localize(path)
+	path, err := Localize(path)
 	if err != nil {
 		return nil, errors.New("http: invalid or unsafe file path")
 	}
