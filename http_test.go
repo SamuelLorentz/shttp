@@ -8,7 +8,6 @@ package http
 
 import (
 	"bytes"
-	"internal/testenv"
 	"io/fs"
 	"net/url"
 	"os"
@@ -16,6 +15,8 @@ import (
 	"regexp"
 	"strings"
 	"testing"
+
+	"github.com/SamuelLorentz/shttp/internal/testenv"
 )
 
 func TestForeachHeaderElement(t *testing.T) {
@@ -88,7 +89,7 @@ func TestOmitHTTP2(t *testing.T) {
 	}
 	t.Parallel()
 	goTool := testenv.GoToolPath(t)
-	out, err := testenv.Command(t, goTool, "test", "-short", "-tags=nethttpomithttp2", "net/http").CombinedOutput()
+	out, err := testenv.Command(t, goTool, "test", "-short", "-tags=nethttpomithttp2", "github.com/SamuelLorentz/shttp").CombinedOutput()
 	if err != nil {
 		t.Fatalf("go test -short failed: %v, %s", err, out)
 	}
@@ -100,7 +101,7 @@ func TestOmitHTTP2(t *testing.T) {
 func TestOmitHTTP2Vet(t *testing.T) {
 	t.Parallel()
 	goTool := testenv.GoToolPath(t)
-	out, err := testenv.Command(t, goTool, "vet", "-tags=nethttpomithttp2", "net/http").CombinedOutput()
+	out, err := testenv.Command(t, goTool, "vet", "-tags=nethttpomithttp2", "github.com/SamuelLorentz/shttp").CombinedOutput()
 	if err != nil {
 		t.Fatalf("go vet failed: %v, %s", err, out)
 	}

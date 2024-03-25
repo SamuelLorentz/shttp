@@ -9,11 +9,8 @@ package cgi
 import (
 	"bufio"
 	"fmt"
-	"internal/testenv"
 	"io"
 	"net"
-	"net/http"
-	"net/http/httptest"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -22,6 +19,12 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/SamuelLorentz/shttp/internal/testenv"
+
+	"github.com/SamuelLorentz/shttp/httptest"
+
+	http "github.com/SamuelLorentz/shttp"
 )
 
 // TestMain executes the test binary as the cgi server if

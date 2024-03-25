@@ -9,9 +9,10 @@ import (
 	"fmt"
 	"io"
 	"log"
-	"net/http"
 	"os"
 	"os/signal"
+
+	http "github.com/SamuelLorentz/shttp"
 )
 
 func ExampleHijacker() {

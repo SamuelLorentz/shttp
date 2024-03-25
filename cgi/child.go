@@ -14,11 +14,12 @@ import (
 	"fmt"
 	"io"
 	"net"
-	"net/http"
 	"net/url"
 	"os"
 	"strconv"
 	"strings"
+
+	http "github.com/SamuelLorentz/shttp"
 )
 
 // Request returns the HTTP request as represented in the current

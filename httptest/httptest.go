@@ -11,8 +11,9 @@ import (
 	"context"
 	"crypto/tls"
 	"io"
-	"net/http"
 	"strings"
+
+	http "github.com/SamuelLorentz/shttp"
 )
 
 // NewRequest wraps NewRequestWithContext using context.Background.

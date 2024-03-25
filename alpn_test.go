@@ -11,16 +11,18 @@ import (
 	"crypto/x509"
 	"fmt"
 	"io"
-	. "net/http"
-	"net/http/httptest"
 	"strings"
 	"testing"
+
+	h "github.com/SamuelLorentz/shttp"
+
+	"github.com/SamuelLorentz/shttp/httptest"
 )
 
 func TestNextProtoUpgrade(t *testing.T) {
 	setParallel(t)
 	defer afterTest(t)
-	ts := httptest.NewUnstartedServer(HandlerFunc(func(w ResponseWriter, r *Request) {
+	ts := httptest.NewUnstartedServer(h.HandlerFunc(func(w h.ResponseWriter, r *h.Request) {
 		fmt.Fprintf(w, "path=%s,proto=", r.URL.Path)
 		if r.TLS != nil {
 			w.Write([]byte(r.TLS.NegotiatedProtocol))
@@ -35,7 +37,7 @@ func TestNextProtoUpgrade(t *testing.T) {
 	ts.TLS = &tls.Config{
 		NextProtos: []string{"unhandled-proto", "tls-0.9"},
 	}
-	ts.Config.TLSNextProto = map[string]func(*Server, *tls.Conn, Handler){
+	ts.Config.TLSNextProto = map[string]func(*h.Server, *tls.Conn, h.Handler){
 		"tls-0.9": handleTLSProtocol09,
 	}
 	ts.StartTLS()
@@ -62,14 +64,14 @@ func TestNextProtoUpgrade(t *testing.T) {
 	{
 		certPool := x509.NewCertPool()
 		certPool.AddCert(ts.Certificate())
-		tr := &Transport{
+		tr := &h.Transport{
 			TLSClientConfig: &tls.Config{
 				RootCAs:    certPool,
 				NextProtos: []string{"unhandled-proto"},
 			},
 		}
 		defer tr.CloseIdleConnections()
-		c := &Client{
+		c := &h.Client{
 			Transport: tr,
 		}
 		res, err := c.Get(ts.URL)
@@ -85,7 +87,7 @@ func TestNextProtoUpgrade(t *testing.T) {
 	// It is HTTP/0.9 over TLS.
 	{
 		c := ts.Client()
-		tlsConfig := c.Transport.(*Transport).TLSClientConfig
+		tlsConfig := c.Transport.(*h.Transport).TLSClientConfig
 		tlsConfig.NextProtos = []string{"tls-0.9"}
 		conn, err := tls.Dial("tcp", ts.Listener.Addr().String(), tlsConfig)
 		if err != nil {
@@ -104,7 +106,7 @@ func TestNextProtoUpgrade(t *testing.T) {
 
 // handleTLSProtocol09 implements the HTTP/0.9 protocol over TLS, for the
 // TestNextProtoUpgrade test.
-func handleTLSProtocol09(srv *Server, conn *tls.Conn, h Handler) {
+func handleTLSProtocol09(srv *h.Server, conn *tls.Conn, handler h.Handler) {
 	br := bufio.NewReader(conn)
 	line, err := br.ReadString('\n')
 	if err != nil {
@@ -115,18 +117,18 @@ func handleTLSProtocol09(srv *Server, conn *tls.Conn, h Handler) {
 	if path == line {
 		return
 	}
-	req, _ := NewRequest("GET", path, nil)
+	req, _ := h.NewRequest("GET", path, nil)
 	req.Proto = "HTTP/0.9"
 	req.ProtoMajor = 0
 	req.ProtoMinor = 9
-	rw := &http09Writer{conn, make(Header)}
-	h.ServeHTTP(rw, req)
+	rw := &http09Writer{conn, make(h.Header)}
+	handler.ServeHTTP(rw, req)
 }
 
 type http09Writer struct {
 	io.Writer
-	h Header
+	h h.Header
 }
 
-func (w http09Writer) Header() Header  { return w.h }
-func (w http09Writer) WriteHeader(int) {} // no headers
+func (w http09Writer) Header() h.Header { return w.h }
+func (w http09Writer) WriteHeader(int)  {} // no headers

@@ -12,11 +12,13 @@ import (
 	"fmt"
 	"io"
 	"net"
-	"net/http"
-	"net/http/cgi"
 	"os"
 	"strings"
 	"time"
+
+	"github.com/SamuelLorentz/shttp/cgi"
+
+	http "github.com/SamuelLorentz/shttp"
 )
 
 // request holds the state for an in-progress request. As soon as it's complete,

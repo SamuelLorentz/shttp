@@ -8,13 +8,14 @@ import (
 	"fmt"
 	"io"
 	"log"
-	"net/http"
 	"os"
 	"runtime"
 	"slices"
 	"strings"
 	"testing"
 	"time"
+
+	http "github.com/SamuelLorentz/shttp"
 )
 
 var quietLog = log.New(io.Discard, "", 0)

@@ -8,8 +8,10 @@ import (
 	"fmt"
 	"io"
 	"log"
-	"net/http"
-	"net/http/httptest"
+
+	"github.com/SamuelLorentz/shttp/httptest"
+
+	http "github.com/SamuelLorentz/shttp"
 )
 
 func ExampleResponseRecorder() {

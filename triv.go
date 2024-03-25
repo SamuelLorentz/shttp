@@ -12,12 +12,13 @@ import (
 	"fmt"
 	"io"
 	"log"
-	"net/http"
 	"os"
 	"os/exec"
 	"strconv"
 	"strings"
 	"sync"
+
+	http "github.com/SamuelLorentz/shttp"
 )
 
 // hello world, the web server

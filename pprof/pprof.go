@@ -12,10 +12,10 @@
 //
 // To use pprof, link this package into your program:
 //
-//	import _ "net/http/pprof"
+//	import _ "github.com/SamuelLorentz/shttp/pprof"
 //
 // If your application is not already running an http server, you
-// need to start one. Add "net/http" and "log" to your imports and
+// need to start one. Add http "github.com/SamuelLorentz/shttp" and "log" to your imports and
 // the following code to your main function:
 //
 //	go func() {
@@ -76,11 +76,8 @@ import (
 	"context"
 	"fmt"
 	"html"
-	"internal/godebug"
-	"internal/profile"
 	"io"
 	"log"
-	"net/http"
 	"net/url"
 	"os"
 	"runtime"
@@ -90,6 +87,12 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/SamuelLorentz/shttp/internal/profile"
+
+	"github.com/SamuelLorentz/shttp/internal/godebug"
+
+	http "github.com/SamuelLorentz/shttp"
 )
 
 func init() {

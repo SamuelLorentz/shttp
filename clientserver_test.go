@@ -18,10 +18,6 @@ import (
 	"io"
 	"log"
 	"net"
-	. "net/http"
-	"net/http/httptest"
-	"net/http/httptrace"
-	"net/http/httputil"
 	"net/textproto"
 	"net/url"
 	"os"
@@ -33,6 +29,11 @@ import (
 	"sync/atomic"
 	"testing"
 	"time"
+
+	. "github.com/SamuelLorentz/shttp"
+	"github.com/SamuelLorentz/shttp/httptest"
+	"github.com/SamuelLorentz/shttp/httptrace"
+	"github.com/SamuelLorentz/shttp/httputil"
 )
 
 type testMode string

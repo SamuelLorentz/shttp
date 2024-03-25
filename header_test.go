@@ -6,12 +6,13 @@ package http
 
 import (
 	"bytes"
-	"internal/race"
 	"reflect"
 	"runtime"
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/SamuelLorentz/shttp/internal/race"
 )
 
 var headerWriteTests = []struct {

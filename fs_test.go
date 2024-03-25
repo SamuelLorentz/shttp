@@ -10,15 +10,11 @@ import (
 	"compress/gzip"
 	"errors"
 	"fmt"
-	"internal/testenv"
 	"io"
 	"io/fs"
 	"mime"
 	"mime/multipart"
 	"net"
-	"net/http"
-	. "net/http"
-	"net/http/httptest"
 	"net/url"
 	"os"
 	"os/exec"
@@ -31,6 +27,12 @@ import (
 	"testing"
 	"testing/fstest"
 	"time"
+
+	"github.com/SamuelLorentz/shttp/internal/testenv"
+
+	. "github.com/SamuelLorentz/shttp"
+	http "github.com/SamuelLorentz/shttp"
+	"github.com/SamuelLorentz/shttp/httptest"
 )
 
 const (

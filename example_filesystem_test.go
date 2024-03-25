@@ -7,8 +7,9 @@ package http_test
 import (
 	"io/fs"
 	"log"
-	"net/http"
 	"strings"
+
+	http "github.com/SamuelLorentz/shttp"
 )
 
 // containsDotFile reports whether name contains a path element starting with a period.

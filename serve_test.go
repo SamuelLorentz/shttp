@@ -16,18 +16,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"internal/testenv"
 	"io"
 	"log"
 	"math/rand"
 	"mime/multipart"
 	"net"
-	. "net/http"
-	"net/http/httptest"
-	"net/http/httptrace"
-	"net/http/httputil"
-	"net/http/internal"
-	"net/http/internal/testcert"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -41,6 +34,15 @@ import (
 	"syscall"
 	"testing"
 	"time"
+
+	"github.com/SamuelLorentz/shttp/internal/testenv"
+
+	. "github.com/SamuelLorentz/shttp"
+	"github.com/SamuelLorentz/shttp/httptest"
+	"github.com/SamuelLorentz/shttp/httptrace"
+	"github.com/SamuelLorentz/shttp/httputil"
+	"github.com/SamuelLorentz/shttp/internal"
+	"github.com/SamuelLorentz/shttp/internal/testcert"
 )
 
 type dummyAddr string
